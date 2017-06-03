@@ -1,0 +1,32 @@
+{
+  "name": "js-meters",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": "https://github.com/aorinevo/js-meters",
+  "scripts": {
+    "start": "webpack ./src/index.js",
+    "dev": "webpack --progress --watch ./src/index.jsx",
+    "build": "webpack"
+  },
+  "author": "Aori Nevo",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "css-loader": "^0.28.1",
+    "fetch-mock": "^5.10.0",
+    "file-loader": "^0.11.1",
+    "serve": "^5.1.5",
+    "style-loader": "^0.17.0",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.6.1"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
