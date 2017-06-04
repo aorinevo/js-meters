@@ -1,0 +1,12 @@
+#svg-meter-container{
+  position: relative;    
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.svg-meter-content {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  text-align: center;
+}

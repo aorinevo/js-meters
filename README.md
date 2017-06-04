@@ -2,32 +2,19 @@
 
 Create a javascript meter and animate it.
 
-## Installation
+# Installation
 
 npm install --save js-meters
 
-## Usage
+# Usage
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div id="jquery-meter"></div>
-  </body>
-  <script type="text/javascript" src="./index.js"></script>
-</html>
-```
+## jQuery Meter
 
 ```javascript
-//index.js
-import Meter from js-meters
+import {jqueryMeter} from "js-meters/src/jquery/jquery-meters"
 
 const meter = new Meter({
-  id: 'jquery-meter',
+  id: 'jquery-meter',  //id of DOM element to which to attach the meter
   radiusOuter: 100,
   radiusInner: 80,
   part: 3,
@@ -38,4 +25,47 @@ const meter = new Meter({
 });
 
 meter.renderInitialMeterState().animateMeter();
+```
+## Angular Meter Component
+
+```javascript
+//app.module.ts
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
+import { AppComponent } from './app.component'
+import { ngMetercomponent } from "js-meters/src/angular/meter.component"
+
+@NgModule({
+  declarations: [
+    AppComponent, 
+    ngMeterComponent
+  ],
+  imports: [
+    BrowserModule   
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+```javascript
+//app.component.ts
+
+@Component({
+  selector: "ng-meter-container",
+  template: `
+    <ancb-meter [meter]="meter"></ancb-meter> 
+  `
+}) 
+export class AppComponent {
+  meter: Object = {
+      radiusOuter: 100,
+      radiusInner: 80,
+      part: 3000,
+      whole: 5000,
+      strokeWhole: '#ddd',
+      strokePart: 'red',
+      strokeWidth: 20
+    }
+}
 ```

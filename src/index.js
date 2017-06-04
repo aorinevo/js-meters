@@ -1,4 +1,4 @@
-import Meter from './jquery/jquery-meter';
+// import Meter from './jquery/jquery-meter';
 
 // const meter = new Meter({
 //   id: 'jquery-meter',
@@ -13,4 +13,13 @@ import Meter from './jquery/jquery-meter';
 // 
 // meter.renderInitialMeterState().animateMeter();
 
-export default Meter;
+// export default Meter;
+
+import ngMeterComponent from './angular/meter.component.ts';
+import jqueryMeter from './jquery/jquery-meter.js';
+
+export {
+  ngMeterComponent,
+  jqueryMeter
+};
+
