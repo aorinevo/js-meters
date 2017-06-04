@@ -14,7 +14,11 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
-    })
+    }),
+    new webpack.ContextReplacementPlugin(
+      /angular(\\|\/)core(\\|\/)@angular/,
+      "./src"
+    )
   ],
   module: {
     rules: [

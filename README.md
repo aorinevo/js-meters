@@ -13,7 +13,7 @@ npm install --save js-meters
 ```javascript
 import {jqueryMeter} from "js-meters/src/jquery/jquery-meters"
 
-const meter = new Meter({
+const meter = new jqueryMeter({
   id: 'jquery-meter',  //id of DOM element to which to attach the meter
   radiusOuter: 100,
   radiusInner: 80,
