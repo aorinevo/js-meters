@@ -19,7 +19,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         include: [
           path.resolve(__dirname, "src")
         ],
@@ -35,6 +35,10 @@ module.exports = {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       },
+      { 
+        test: /\.ts$/, 
+        loader: "ts-loader" 
+      },
       {
         test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
         loader: 'url-loader',
@@ -48,7 +52,7 @@ module.exports = {
     'cheerio': 'window'
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js', '.ts']
   },
   devtool: 'source-map'
 };
