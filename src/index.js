@@ -1,5 +1,5 @@
 // import Meter from './jquery/jquery-meter';
-
+// 
 // const meter = new Meter({
 //   id: 'jquery-meter',
 //   radiusOuter: 100,
@@ -12,14 +12,14 @@
 // });
 // 
 // meter.renderInitialMeterState().animateMeter();
-
+// 
 // export default Meter;
 
-import ngMeterComponent from './angular/meter.component.ts';
+//import ngMeterComponent from './angular/meter.component.ts';
 import jqueryMeter from './jquery/jquery-meter.js';
 
 export {
-  ngMeterComponent,
+//  ngMeterComponent,
   jqueryMeter
 };
 

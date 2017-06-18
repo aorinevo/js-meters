@@ -27,7 +27,7 @@ const meter = new jqueryMeter({
 meter.renderInitialMeterState().animateMeter();
 ```
 ## Angular Meter Component
-
+(Not bundled)
 ```javascript
 //app.module.ts
 import { BrowserModule } from '@angular/platform-browser'

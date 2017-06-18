@@ -56,7 +56,7 @@ module.exports = {
     'cheerio': 'window'
   },
   resolve: {
-    extensions: ['.js', '.ts']
+    extensions: ['.js']
   },
   devtool: 'source-map'
 };
