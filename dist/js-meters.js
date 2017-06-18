@@ -239,6 +239,13 @@ var Meter = function () {
       _animateMeter(this.path2, this.config);
       return this;
     }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.config.id;
+
+      (0, _jquery2.default)('#' + id).empty();
+    }
   }]);
 
   return Meter;

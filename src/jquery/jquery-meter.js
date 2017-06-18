@@ -87,6 +87,10 @@ class Meter {
     animateMeter( this.path2, this.config );
     return this;
   }
+  
+  destroy(id = this.config.id){
+    $('#'+id).empty();
+  }
 }
 
 export default Meter;
