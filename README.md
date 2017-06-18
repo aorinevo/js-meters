@@ -41,7 +41,7 @@ npm install --save js-meters
 ## jQuery Meter
 
 ```javascript
-import {jqueryMeter} from "js-meters/src/jquery/jquery-meters"
+import {jqueryMeter} from "js-meters/src/jquery/jquery-meter"
 
 const meter = new jqueryMeter({
   id: 'jquery-meter',  //id of DOM element to which to attach the meter
