@@ -8,7 +8,9 @@ module.exports = {
   output: {
     path: __dirname + '/dist/',
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'js-meters.js',
+    library: 'jsMeters',
+    libraryTarget: 'umd'
   },
   plugins: [
     new webpack.ProvidePlugin({

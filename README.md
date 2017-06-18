@@ -8,6 +8,36 @@ npm install --save js-meters
 
 # Usage
 
+## HTML
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>js meters</title>
+    <script type="text/javascript" src="./dist/js-meters.js"></script>
+  </head>
+  <body>
+    <h1>jQuery Meter</h1>
+    <div id="jquery-meter"></div>
+    <script type="text/javascript">
+      var meter = new jsMeters.jqueryMeter({
+        id: 'jquery-meter',  //id of DOM element to which to attach the meter
+        radiusOuter: 100,
+        radiusInner: 80,
+        part: 3,
+        whole: 5,
+        strokeWhole: '#ddd',
+        strokePart: 'red',
+        strokeWidth: 20
+      });
+      meter.renderInitialMeterState().animateMeter();
+    </script>
+  </body>
+</html>
+```
+
 ## jQuery Meter
 
 ```javascript
