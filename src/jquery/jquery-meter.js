@@ -38,12 +38,12 @@ function renderInitialMeterState( svg, path1, path2, config){
   svg.appendChild( path2 ).setAttribute('id', config.id+'-path2');
   path1.style.strokeWidth = config.strokeWidth;
   path1.style.stroke = config.strokeWhole;
-  path1.style.fill = "white";
+  path1.style.fillOpacity = 0;
   path1.setAttribute('d',describeArc(config.radiusOuter, config.radiusOuter, config.radiusInner, 0, 359.9999));
   
   path2.style.strokeWidth = config.strokeWidth;
   path2.style.stroke = config.strokePart;
-  path2.style.fill = "white";
+  path2.style.fillOpacity = 0;
 
   document.getElementById( config.id ).appendChild( svg );
 }
