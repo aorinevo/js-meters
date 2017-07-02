@@ -13,6 +13,7 @@ module.exports = {
     libraryTarget: 'umd'
   },
   plugins: [
+    new webpack.optimize.UglifyJsPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
