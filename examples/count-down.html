@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>js meters</title>
-    <script type="text/javascript" src="./dist/js-meters.js"></script>
-    <script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../dist/js-meters.js"></script>
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
   </head>
   <body>
     <h1>jQuery Meter</h1>
@@ -23,15 +23,14 @@
         strokePart: 'red',
         strokeWidth: 30
       });
-      meter.renderInitialMeterState();
-      var countDown= 50;
+      meter.renderInitialMeterState().animateMeter();
+      var countDown= 10;
+      for(var i = 1; i<=countDown; i++){
+        meter.animateMeter();
+      }
       $('#jquery-meter').on('meter:animation:done',function(){
-        console.log('test');
-        if( countDown > 0){
-          meter.animateMeter();
-        }
-        $('#counter').text(countDown);
-      });      
+        $('#counter').text(countDown--);
+      });        
     </script>
   </body>
 </html>

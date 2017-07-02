@@ -41,6 +41,10 @@ module.exports = {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       },
+      {
+          test: /\.hbs/,
+          loader: "handlebars-loader"
+      },
       { 
         test: /\.ts$/, 
         loader: "ts-loader" 

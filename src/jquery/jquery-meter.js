@@ -1,4 +1,4 @@
-import $ from 'jquery';
+var $ = require('jquery');
   
 $.extend($.easing, {
   easeInQuad: (x, t, b, c, d) => {
@@ -29,57 +29,62 @@ function describeArc( x, y, radius, startAngle, endAngle ) {
   return d;
 }
 
-function renderInitialMeterState( svg, path1, path2, config){
+function renderInitialMeterState( $el, svg, path1, path2, config){
   svg.setAttribute('id', config.id+'-svg');
   svg.setAttribute('width', 2 * config.radiusOuter);
   svg.setAttribute('height', 2 * config.radiusOuter);
 
   svg.appendChild( path1 ).setAttribute('id', config.id+'-path1');
   svg.appendChild( path2 ).setAttribute('id', config.id+'-path2');
-  path1.style.strokeWidth = config.strokeWidth;
+  path1.style.strokeWidth = config.radiusOuter-config.radiusInner;
   path1.style.stroke = config.strokeWhole;
   path1.style.fillOpacity = 0;
   path1.setAttribute('d',describeArc(config.radiusOuter, config.radiusOuter, config.radiusInner, 0, 359.9999));
   
-  path2.style.strokeWidth = config.strokeWidth;
+  path2.style.strokeWidth = path1.style.strokeWidth;
   path2.style.stroke = config.strokePart;
   path2.style.fillOpacity = 0;
 
-  document.getElementById( config.id ).appendChild( svg );
+  $el.prepend( svg );
 }
 
 function animateMeter( path2, config ){
-  $( {
-    'pointsAccumulated': 0,            
-    'angle': 0
-  } ).animate( {
-    'pointsAccumulated': config.part,            
+  config.$angle.animate( {           
     'angle': config.part/config.whole * 360
   }, {
-    duration: 2000, 
-    easing: "easeInQuad",                  
+    duration: config.duration, 
+    easing: "easeInQuad",     
+    start: function(){
+      config.$el.trigger('meter:animation:start');
+    },            
     step: function ( now, fx ) {
-        switch ( fx.prop ) {
-        case 'angle':
-            path2.setAttribute('d', describeArc(config.radiusOuter, config.radiusOuter, config.radiusInner, 0, now));
-            break;
-        default:
-            //this.pointsCounter = Math.ceil( now );
-        }
-    }.bind(this)
+      path2.setAttribute('d', describeArc(config.radiusOuter, config.radiusOuter, config.radiusInner, 0, now));
+      config.$el.trigger('meter:animation:step',{
+        now: now,
+        fx: fx
+      });
+    },
+    done: function(){
+      this.angle = 0;
+      config.$el.trigger('meter:animation:done');
+    }
   } );
 }
 
 class Meter {
-  constructor( options ) {
+  constructor( options = {} ) {
     this.config = options;
+    this.$el = options.$el;
+    this.queuedAnimationCounter = 0;
+    this.config.$angle = $( {'angle': 0} );
     this.svg = document.createElementNS( "http://www.w3.org/2000/svg", "svg" );
     this.path1 = document.createElementNS( "http://www.w3.org/2000/svg", 'path' );
     this.path2 = document.createElementNS( "http://www.w3.org/2000/svg", 'path' );
+    
   }
 
   renderInitialMeterState(){    
-    renderInitialMeterState(this.svg, this.path1, this.path2, this.config);
+    renderInitialMeterState(this.$el, this.svg, this.path1, this.path2, this.config);
     return this;
   }
   
