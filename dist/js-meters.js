@@ -142,15 +142,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(2);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-_jquery2.default.extend(_jquery2.default.easing, {
+var $ = __webpack_require__(2);
+
+$.extend($.easing, {
   easeInQuad: function easeInQuad(x, t, b, c, d) {
     return c * (t /= d) * t + b;
   }
@@ -176,52 +172,58 @@ function describeArc(x, y, radius, startAngle, endAngle) {
   return d;
 }
 
-function _renderInitialMeterState(svg, path1, path2, config) {
+function _renderInitialMeterState($el, svg, path1, path2, config) {
   svg.setAttribute('id', config.id + '-svg');
   svg.setAttribute('width', 2 * config.radiusOuter);
   svg.setAttribute('height', 2 * config.radiusOuter);
 
   svg.appendChild(path1).setAttribute('id', config.id + '-path1');
   svg.appendChild(path2).setAttribute('id', config.id + '-path2');
-  path1.style.strokeWidth = config.strokeWidth;
+  path1.style.strokeWidth = config.radiusOuter - config.radiusInner;
   path1.style.stroke = config.strokeWhole;
   path1.style.fillOpacity = 0;
   path1.setAttribute('d', describeArc(config.radiusOuter, config.radiusOuter, config.radiusInner, 0, 359.9999));
 
-  path2.style.strokeWidth = config.strokeWidth;
+  path2.style.strokeWidth = path1.style.strokeWidth;
   path2.style.stroke = config.strokePart;
   path2.style.fillOpacity = 0;
 
-  document.getElementById(config.id).appendChild(svg);
+  $el.prepend(svg);
 }
 
 function _animateMeter(path2, config) {
-  (0, _jquery2.default)({
-    'pointsAccumulated': 0,
-    'angle': 0
-  }).animate({
-    'pointsAccumulated': config.part,
+  config.$angle.animate({
     'angle': config.part / config.whole * 360
   }, {
-    duration: 2000,
+    duration: config.duration,
     easing: "easeInQuad",
-    step: function (now, fx) {
-      switch (fx.prop) {
-        case 'angle':
-          path2.setAttribute('d', describeArc(config.radiusOuter, config.radiusOuter, config.radiusInner, 0, now));
-          break;
-        default:
-        //this.pointsCounter = Math.ceil( now );
-      }
-    }.bind(this)
+    start: function start() {
+      config.$el.trigger('meter:animation:start');
+    },
+    step: function step(now, fx) {
+      path2.setAttribute('d', describeArc(config.radiusOuter, config.radiusOuter, config.radiusInner, 0, now));
+      config.$el.trigger('meter:animation:step', {
+        now: now,
+        fx: fx
+      });
+    },
+    done: function done() {
+      this.angle = 0;
+      config.$el.trigger('meter:animation:done');
+    }
   });
 }
 
 var Meter = function () {
-  function Meter(options) {
+  function Meter() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     _classCallCheck(this, Meter);
 
     this.config = options;
+    this.$el = options.$el;
+    this.queuedAnimationCounter = 0;
+    this.config.$angle = $({ 'angle': 0 });
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     this.path1 = document.createElementNS("http://www.w3.org/2000/svg", 'path');
     this.path2 = document.createElementNS("http://www.w3.org/2000/svg", 'path');
@@ -230,7 +232,7 @@ var Meter = function () {
   _createClass(Meter, [{
     key: "renderInitialMeterState",
     value: function renderInitialMeterState() {
-      _renderInitialMeterState(this.svg, this.path1, this.path2, this.config);
+      _renderInitialMeterState(this.$el, this.svg, this.path1, this.path2, this.config);
       return this;
     }
   }, {
@@ -244,7 +246,7 @@ var Meter = function () {
     value: function destroy() {
       var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.config.id;
 
-      (0, _jquery2.default)('#' + id).empty();
+      $('#' + id).empty();
     }
   }]);
 

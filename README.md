@@ -56,6 +56,11 @@ const meter = new jqueryMeter({
 
 meter.renderInitialMeterState().animateMeter();
 ```
+
+## Events
+- `meter:animation:start`: Triggered when meter animation starts. Bound to the meter $el.
+- `meter:animation:done`: Triggered when meter animation is done. Bound to the meter $el.
+
 ## Angular Meter Component
 (Not bundled)
 ```javascript
